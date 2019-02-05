@@ -32,7 +32,7 @@ void displayM01_Home() {
     }
     fill(colorMButtonsBackground_Hover);
     if (mousePressed && mouseButton == LEFT) {
-      link("http://skydefr.com/thegame/register.php"); //Ouvrir la page internet permettant de s'inscrire
+      link("http://skydefr.com/realm_of_fantasy/register.php"); //Ouvrir la page internet permettant de s'inscrire
       delay(500);
     }
   } else {
@@ -69,7 +69,7 @@ void displayM01_Home() {
     }
     fill(100, 100, 200, 200);
     if (mousePressed && mouseButton == LEFT) {
-      link("http://skydefr.com/thegame/index.php"); //Ouvrir la page internet d'accueil
+      link("http://skydefr.com/realm_of_fantasy/index.php"); //Ouvrir la page internet d'accueil
       delay(500);
     }
   } else {
@@ -164,7 +164,7 @@ void displayM02_Auth() {
     }
     fill(colorMButtonsBackground_Hover);
     if (mousePressed && mouseButton == LEFT && M02_textzone01 != "Pseudo" && M02_textzone02 != "Mot de passe") {
-      String[] M02_Button02_check = loadStrings("http://skydefr.com/thegame/request-auth.php?pseudo="+M02_textzone01+"&motdepasse="+M02_textzone02);
+      String[] M02_Button02_check = loadStrings("http://skydefr.com/realm_of_fantasy/request-auth.php?pseudo="+M02_textzone01+"&motdepasse="+M02_textzone02);
       if (int(M02_Button02_check[0]) == 731298465) { //Les identifiants saisis sont bien présents dans la base de données
         println("Identification avec succès!");
         M02_button03 = "Succès!";
