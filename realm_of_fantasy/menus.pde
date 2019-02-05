@@ -99,7 +99,7 @@ void displayM02_Auth() {
   image(game_logo, width/2, 140); //LOGO DU JEU
   playMusic(1);
 
-  /* DEBUTZONE DE TEXTE 01 */
+  /* DEBUT ZONE DE TEXTE 01 */
   fill(colorMButtonsBackground);
   if (mouseX > ((width/2)-(620/2)) && mouseX < (((width/2)+(620/2))) && mouseY > (300-(60/2)) && mouseY < (300+(60/2))) {
     fill(colorMTextzoneBackground_Hover);
@@ -290,7 +290,7 @@ void displayM03_Principal() {
     //  fill(colorMButtonsBackground);
     //}
   } else {
-      M03_button01_sound = false;
+    M03_button01_sound = false;
     fill(colorMButtonsBackground);
   }
   rect(width/2, 300, 620, 60); //AFFICHAGE BOUTON 01
@@ -299,17 +299,19 @@ void displayM03_Principal() {
   /* DEBUT BOUTON 02 */
   if (mouseX > ((width/2)-(620/2)) && mouseX < (((width/2)+(620/2))) && mouseY > (400-(60/2)) && mouseY < (400+(60/2))) {
     if (!M03_button02_sound) {
-      //playSound(1);
+      playSound(1);
       M03_button02_sound = true;
     }
-    fill(colorMSpecialButtonsBackground);
+    fill(colorMButtonsBackground_Hover);
+    //fill(colorMSpecialButtonsBackground);
     if (mousePressed && mouseButton == LEFT) {
       //loadStats();
       //delay(200);
     }
   } else {
-      M03_button02_sound = false;
-    fill(colorMSpecialButtonsBackground);
+    M03_button02_sound = false;
+    fill(colorMButtonsBackground);
+    //fill(colorMSpecialButtonsBackground);
   }
   rect(width/2, 400, 620, 60); //AFFICHAGE BOUTON 02
   /* FIN BOUTON 02 */
@@ -317,17 +319,19 @@ void displayM03_Principal() {
   /* DEBUT BOUTON 03 */
   if (mouseX > ((width/2)-(620/2)) && mouseX < (((width/2)+(620/2))) && mouseY > (500-(60/2)) && mouseY < (500+(60/2))) {
     if (!M03_button03_sound) {
-      //playSound(1);
+      playSound(1);
       M03_button03_sound = true;
     }
-    fill(colorMSpecialButtonsBackground);
+    fill(colorMButtonsBackground_Hover);
+    //fill(colorMSpecialButtonsBackground);
     if (mousePressed && mouseButton == LEFT) {
       //saveStats();
       //delay(200);
     }
   } else {
-      M03_button03_sound = false;
-    fill(colorMSpecialButtonsBackground);
+    M03_button03_sound = false;
+    fill(colorMButtonsBackground);
+    //fill(colorMSpecialButtonsBackground);
   }
   rect(width/2, 500, 620, 60); //AFFICHAGE BOUTON 03
   /* FIN BOUTON 03 */
@@ -345,7 +349,7 @@ void displayM03_Principal() {
       delay(200);
     }
   } else {
-      M03_button04_sound = false;
+    M03_button04_sound = false;
     fill(colorMButtonsBackground);
   }
   rect(width/2, 600, 620, 60); //AFFICHAGE BOUTON 04
@@ -354,8 +358,8 @@ void displayM03_Principal() {
   textSize(42);
   textAlign(CENTER);
   fill(colorMButtonsText);
-  text("", width/2, 400+(60/4)); //TEXTE BOUTON 02 (NON FONCTIONNEL POUR LE MOMENT)
-  text("", width/2, 500+(60/4)); //TEXTE BOUTON 03 (NON FONCTIONNEL POUR LE MOMENT)
+  text("Charger Partie", width/2, 400+(60/4)); //TEXTE BOUTON 02 (NON FONCTIONNEL POUR LE MOMENT)
+  text("Nouvelle Partie", width/2, 500+(60/4)); //TEXTE BOUTON 03 (NON FONCTIONNEL POUR LE MOMENT)
   text("Se déconnecter", width/2, 600+(60/4)); //TEXTE BOUTON 04
 
   /* DEBUT EVENEMENTS BOUTON 01 */
@@ -363,7 +367,7 @@ void displayM03_Principal() {
     M03_button01 = "Continuer";
     //fill(colorMButtonsText);
   } else {
-    M03_button01 = "Nouvelle partie";
+    M03_button01 = "Débuter l'aventure";
     //fill(55, 55, 55, 55);
   }
   /* FIN EVENEMENTS BOUTON 01 */

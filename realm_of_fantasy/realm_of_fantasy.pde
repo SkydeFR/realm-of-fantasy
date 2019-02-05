@@ -168,7 +168,7 @@ void keyPressed() {
     } else {
       println("Aucun pseudo en ligne.");
     }
-  } else if (key == '1') {
+  } else if (key == '5') {
     M04_continuer = true;
     menuID = 4;
   } else if (key == '2' && menuID == 4) {
