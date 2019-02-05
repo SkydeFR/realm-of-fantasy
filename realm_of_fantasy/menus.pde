@@ -32,7 +32,7 @@ void displayM01_Home() {
     }
     fill(colorMButtonsBackground_Hover);
     if (mousePressed && mouseButton == LEFT) {
-      link("http://skydefr.com/realm_of_fantasy/register.php"); //Ouvrir la page internet permettant de s'inscrire
+      link("http://skydefr.com/projets/realm_of_fantasy/register.php"); //Ouvrir la page internet permettant de s'inscrire
       delay(500);
     }
   } else {
@@ -57,8 +57,11 @@ void displayM01_Home() {
     M01_button03_sound = false;
     fill(200, 55, 55, 155);
   }
-  rect(width/30, height-width/32, 620/15, 60/1.5); //AFFICHAGE BOUTON 04
-  image(quit_button, width/30, height-width/32); //IMAGE BOUTON 04
+  rect(width/30, height-width/32, 620/15, 60/1.5); //AFFICHAGE BOUTON 03
+  image(quit_button, width/30, height-width/32); //IMAGE BOUTON 03
+  textSize(14);
+  fill(200,80,80,255);
+  text("Demo Version Alpha", width-75, 15);
   /* FIN BOUTON 03 */
 
   /* DEBUT BOUTON 04 */
@@ -69,7 +72,7 @@ void displayM01_Home() {
     }
     fill(100, 100, 200, 200);
     if (mousePressed && mouseButton == LEFT) {
-      link("http://skydefr.com/realm_of_fantasy/index.php"); //Ouvrir la page internet d'accueil
+      link("http://skydefr.com/projets/realm_of_fantasy/index.php"); //Ouvrir la page internet d'accueil
       delay(500);
     }
   } else {
@@ -99,7 +102,7 @@ void displayM02_Auth() {
   image(game_logo, width/2, 140); //LOGO DU JEU
   playMusic(1);
 
-  /* DEBUT ZONE DE TEXTE 01 */
+  /* DEBUTZONE DE TEXTE 01 */
   fill(colorMButtonsBackground);
   if (mouseX > ((width/2)-(620/2)) && mouseX < (((width/2)+(620/2))) && mouseY > (300-(60/2)) && mouseY < (300+(60/2))) {
     fill(colorMTextzoneBackground_Hover);
@@ -164,7 +167,7 @@ void displayM02_Auth() {
     }
     fill(colorMButtonsBackground_Hover);
     if (mousePressed && mouseButton == LEFT && M02_textzone01 != "Pseudo" && M02_textzone02 != "Mot de passe") {
-      String[] M02_Button02_check = loadStrings("http://skydefr.com/realm_of_fantasy/request-auth.php?pseudo="+M02_textzone01+"&motdepasse="+M02_textzone02);
+      String[] M02_Button02_check = loadStrings("http://skydefr.com/projets/realm_of_fantasy/request-auth.php?pseudo="+M02_textzone01+"&motdepasse="+M02_textzone02);
       if (int(M02_Button02_check[0]) == 731298465) { //Les identifiants saisis sont bien présents dans la base de données
         println("Identification avec succès!");
         M02_button03 = "Succès!";
@@ -290,48 +293,58 @@ void displayM03_Principal() {
     //  fill(colorMButtonsBackground);
     //}
   } else {
-    M03_button01_sound = false;
+      M03_button01_sound = false;
     fill(colorMButtonsBackground);
   }
   rect(width/2, 300, 620, 60); //AFFICHAGE BOUTON 01
   /* FIN BOUTON 01 */
 
   /* DEBUT BOUTON 02 */
-  if (mouseX > ((width/2)-(620/2)) && mouseX < (((width/2)+(620/2))) && mouseY > (400-(60/2)) && mouseY < (400+(60/2))) {
-    if (!M03_button02_sound) {
-      playSound(1);
-      M03_button02_sound = true;
+    if (mouseX > ((width/2)-(620/2)) && mouseX < (((width/2)+(620/2))) && mouseY > (400-(60/2)) && mouseY < (400+(60/2))) {
+      if (!M03_button02_sound) {
+        if (lastsave_file.exists()) {
+          playSound(1);
+        }
+        M03_button02_sound = true;
+      }
+      if (lastsave_file.exists()) {
+        fill(colorMButtonsBackground_Hover);
+      } else {
+        fill(colorMSpecialButtonsBackground);
+      }
+      if (mousePressed && mouseButton == LEFT) {
+        if (lastsave_file.exists()) {
+          deleteStats();
+          M04_nouvelle_partie = true;
+          menuID = 4;
+          delay(200);
+        }
+      }
+    } else {
+      M03_button02_sound = false;
+      if (lastsave_file.exists()) {
+        fill(colorMButtonsBackground);
+      } else {
+        fill(colorMSpecialButtonsBackground);
+      }
     }
-    fill(colorMButtonsBackground_Hover);
-    //fill(colorMSpecialButtonsBackground);
-    if (mousePressed && mouseButton == LEFT) {
-      //loadStats();
-      //delay(200);
-    }
-  } else {
-    M03_button02_sound = false;
-    fill(colorMButtonsBackground);
-    //fill(colorMSpecialButtonsBackground);
-  }
   rect(width/2, 400, 620, 60); //AFFICHAGE BOUTON 02
   /* FIN BOUTON 02 */
 
   /* DEBUT BOUTON 03 */
   if (mouseX > ((width/2)-(620/2)) && mouseX < (((width/2)+(620/2))) && mouseY > (500-(60/2)) && mouseY < (500+(60/2))) {
     if (!M03_button03_sound) {
-      playSound(1);
+      //playSound(1);
       M03_button03_sound = true;
     }
-    fill(colorMButtonsBackground_Hover);
-    //fill(colorMSpecialButtonsBackground);
+    fill(colorMSpecialButtonsBackground);
     if (mousePressed && mouseButton == LEFT) {
       //saveStats();
       //delay(200);
     }
   } else {
     M03_button03_sound = false;
-    fill(colorMButtonsBackground);
-    //fill(colorMSpecialButtonsBackground);
+    fill(colorMSpecialButtonsBackground);
   }
   rect(width/2, 500, 620, 60); //AFFICHAGE BOUTON 03
   /* FIN BOUTON 03 */
@@ -349,7 +362,7 @@ void displayM03_Principal() {
       delay(200);
     }
   } else {
-    M03_button04_sound = false;
+      M03_button04_sound = false;
     fill(colorMButtonsBackground);
   }
   rect(width/2, 600, 620, 60); //AFFICHAGE BOUTON 04
@@ -358,16 +371,19 @@ void displayM03_Principal() {
   textSize(42);
   textAlign(CENTER);
   fill(colorMButtonsText);
-  text("Charger Partie", width/2, 400+(60/4)); //TEXTE BOUTON 02 (NON FONCTIONNEL POUR LE MOMENT)
-  text("Nouvelle Partie", width/2, 500+(60/4)); //TEXTE BOUTON 03 (NON FONCTIONNEL POUR LE MOMENT)
+  
+  text("Nouvelle partie", width/2, 400+(60/4)); //TEXTE BOUTON 02 (NON FONCTIONNEL POUR LE MOMENT)
+  text("Gestion des sauvegardes", width/2, 500+(60/4)); //TEXTE BOUTON 03 (NON FONCTIONNEL POUR LE MOMENT)
   text("Se déconnecter", width/2, 600+(60/4)); //TEXTE BOUTON 04
 
   /* DEBUT EVENEMENTS BOUTON 01 */
   if (lastsave_file.exists()) {
     M03_button01 = "Continuer";
+    M03_button02 = "Nouvelle partie";
     //fill(colorMButtonsText);
   } else {
-    M03_button01 = "Débuter l'aventure";
+    M03_button01 = "Commencer l'aventure";
+    M03_button02 = "";
     //fill(55, 55, 55, 55);
   }
   /* FIN EVENEMENTS BOUTON 01 */

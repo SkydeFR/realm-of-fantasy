@@ -32,22 +32,38 @@ PImage back_button, help_button;
 PImage editing_pic;
 boolean M02_showHelp, M02_showEditing01, M02_showEditing02;
 PImage M03_Principal;
-String M03_button01;
+String M03_button01, M03_button02;
 boolean M01_button01_sound, M01_button02_sound, M01_button03_sound, M01_button04_sound;
 boolean M02_button03_sound, M02_button04_sound, M02_button05_sound;
 boolean M03_button01_sound, M03_button02_sound, M03_button03_sound, M03_button04_sound;
+boolean M05_button01_sound;
 /* FIN MENUS */
 
 /* DEBUT INGAME */
 String[] dialogList;
+String dialogBox_txt;
+textBox dialog;
+int dialogBox_constX = 640;
+int dialogBox_constY = 625;
+int dialogBox_constWidth = 1020;
+int dialogBox_constHeight = 150;
 int time_tmp, save_counter;
 boolean M04_continuer, M04_nouvelle_partie;
-boolean M04_button01_sound;
+boolean M04_button01_sound, M04_button02_sound;
+boolean M04_button999_sound;
 color colorIGButtonsBackground, colorIGButtonsBackground_Hover;
 color colorIGInterface;
 PImage M04_character_button;
 PImage M05_characterIT_background;
 PImage intro01;
+PImage bateau;
+PImage vets;
+PImage door;
+PImage goleft;
+PImage ile;
+PImage forest01;
+PImage forest02;
+PImage towndoor;
 int step;
 String chapter;
 /* FIN INGAME */
@@ -57,8 +73,8 @@ void setup() {
   size (1280, 720); //Taille de la fenêtre de jeu (1280*720)
   smooth();
   game_name = "Realm Of Fantasy"; //Nom de la fenêtre de jeu (= nom du jeu)
-  game_icon = loadImage("game_icon.png"); //Icone de la fenêtre de jeu (= icone du jeu)
-  cursor_01 = loadImage("cursor_01.png");
+  game_icon = loadImage("img/game_icon.png"); //Icone de la fenêtre de jeu (= icone du jeu)
+  cursor_01 = loadImage("img/cursor_01.png");
   surface.setTitle(game_name); 
   surface.setIcon(game_icon);
   surface.setCursor(cursor_01, 1, 1); //Défini un curseur spéciale pour la fenêtre de jeu (= curseur en jeu)
@@ -67,7 +83,7 @@ void setup() {
   Nmusic = 1;
   try {
     // Open an audio input stream.
-    soundFile = new File(sketchPath()+"\\music"+Nmusic+".wav");
+    soundFile = new File(sketchPath()+"\\wav\\music"+Nmusic+".wav");
     audioIn = AudioSystem.getAudioInputStream(soundFile);
     // Get a sound clip resource.
     clip = AudioSystem.getClip();
@@ -88,7 +104,7 @@ void setup() {
   /* FIN PARAMETRES */
 
   /* DEBUT MENUS */
-  game_logo = loadImage("game_logo.png");
+  game_logo = loadImage("img/game_logo.png");
   colorMButtonsBackground = color(155, 155, 155, 155); //Couleur par défaut du FOND des bouttons des menus
   colorMButtonsBackground_Hover = color(200, 200, 200, 200); //Couleur par défaut du FOND des bouttons des menus avec survole de la souris par-dessus
   colorMButtonsText = color(0, 0, 0, 200); //Couleur par défaut du TEXTE des bouttons des menus
@@ -96,25 +112,26 @@ void setup() {
   colorMTextzoneBackground_Hover = color(200, 200, 155, 200); //Couleur par défaut du FOND des zones de textes des menus avec survole de la souris par-dessus
   colorMSpecialButtonsBackground = color(155, 155, 155, 55); //Couleur par défaut du FOND des bouttons spéciaux des menus
   colorMSpecialButtonsBackground_Hover = color(200, 200, 200, 100); //Couleur par défaut du FOND des bouttons spéciaux des menus avec survole de la souris par-dessus
-  M01_Home = loadImage("M01_Home.png");
-  quit_button = loadImage("M01_quit_button.png");
+  M01_Home = loadImage("img/M01_Home.png");
+  quit_button = loadImage("img/M01_quit_button.png");
   quit_button.resize(32, 32);
-  website_button = loadImage("M01_website_button.png");
+  website_button = loadImage("img/M01_website_button.png");
   website_button.resize(32, 32);
-  M02_Auth = loadImage("M01_Home.png");
+  M02_Auth = loadImage("img/M01_Home.png");
   M02_textzone01 = "Pseudo";
   M02_textzone02 = "Mot de passe";
   M02_button03 = "Connexion";
-  back_button = loadImage("M02_back_button.png");
+  back_button = loadImage("img/M02_back_button.png");
   back_button.resize(56, 56);
-  help_button = loadImage("M02_help_button.png");
+  help_button = loadImage("img/M02_help_button.png");
   help_button.resize(52, 52);
-  editing_pic = loadImage("M02_editing_pic.png");
+  editing_pic = loadImage("img/M02_editing_pic.png");
   editing_pic.resize(30, 30);
   M02_showHelp = false;
   M02_showEditing01 = false;
-  M03_Principal = loadImage("M01_Home.png");
+  M03_Principal = loadImage("img/M01_Home.png");
   M03_button01 = "Nouvelle partie";
+  M03_button02 = "";
   M01_button01_sound = false;
   M01_button02_sound = false;
   M01_button03_sound = false;
@@ -126,6 +143,10 @@ void setup() {
   M03_button02_sound = false;
   M03_button03_sound = false;
   M03_button04_sound = false;
+  M05_button01_sound = false;
+  M04_button01_sound = false;
+  M04_button02_sound = false;
+  M04_button999_sound = false;
   menuID = 1; //Premier menu au lancement du jeu = Menu de connexion (1)
   background(M01_Home); //BACKGROUND
   /* FIN MENUS */
@@ -138,11 +159,19 @@ void setup() {
   M04_nouvelle_partie = false;
   colorIGButtonsBackground_Hover = color(255, 125, 75, 200);
   colorIGButtonsBackground = color(200, 75, 25, 155);
-  colorIGInterface = color(50,125,125,100);
-  M04_character_button = loadImage("M05_character_button.png");
+  colorIGInterface = color(0,0,0,100);
+  M04_character_button = loadImage("img/M05_character_button.png");
   M04_character_button.resize(32, 32);
-  M05_characterIT_background = loadImage("M05_characterIT_background.png");
-  intro01 = loadImage("Intro01.png");
+  M05_characterIT_background = loadImage("img/M05_characterIT_background.png");
+  intro01 = loadImage("img/intro01bis.png");
+  ile = loadImage ("img/Intro01.png");
+  bateau = loadImage("img/bateau01.png");
+  vets = loadImage ("img/vets.png");
+  door = loadImage ("img/door.png");
+  forest01 = loadImage("img/forest01.png");
+  forest02 = loadImage ("img/forest02.png");
+  towndoor = loadImage ("img/towndoor.png");
+  goleft = loadImage ("img/flèche.png");
   /* FIN INGAME */
 }
 
@@ -168,6 +197,7 @@ void keyPressed() {
     } else {
       println("Aucun pseudo en ligne.");
     }
+      println(step); //debug info
   } else if (key == '5') {
     M04_continuer = true;
     menuID = 4;

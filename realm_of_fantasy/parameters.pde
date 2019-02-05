@@ -14,12 +14,18 @@ void loadStats() {
   println(chapter+" Partie "+step); //Chargement de la sauvegarde
 }
 
+void deleteStats() {
+ if (dataFile(LASTSAVE_FILE).exists()) {
+   dataFile(LASTSAVE_FILE).delete();
+ }
+}
+
 void playMusic(int n) {
   if (Nmusic != n) {
     Nmusic = n;
     if (clip.isRunning()) clip.stop();
     try {
-      soundFile = new File(sketchPath()+"\\music"+Nmusic+".wav");
+      soundFile = new File(sketchPath()+"\\wav\\music"+Nmusic+".wav");
       audioIn = AudioSystem.getAudioInputStream(soundFile);
       clip = AudioSystem.getClip();
       clip.open(audioIn);
@@ -39,7 +45,7 @@ void playMusic(int n) {
 
 void playSound(int n) {
     try {
-      File TMP_soundFile = new File(sketchPath()+"\\sound"+n+".wav");
+      File TMP_soundFile = new File(sketchPath()+"\\wav\\sound"+n+".wav");
       AudioInputStream TMP_audioIn = AudioSystem.getAudioInputStream(TMP_soundFile);
       Clip TMP_clip = AudioSystem.getClip();
       TMP_clip.open(TMP_audioIn);
